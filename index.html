@@ -46,7 +46,9 @@
     .minh60{
         min-height:60vh;
     }
-
+    .bigcard>.cardList>.card{
+        width:15% !important;
+    }
 
 </style>
 <body class="d-flex justify-content-center">
@@ -60,9 +62,9 @@
             <button type="button" class="btn btn-lg btn-outline-info col-3 border-4" @click="modeSet('select')">選卡模式</button>
 
         </div>
-        <div id="selected" class="row minh60" v-show="mode!='home'">
+        <div id="selected" class="row minh60" v-if="mode!='home'">
             <!-- 已選取區 -->
-            <div class="cardList d-flex justify-content-center align-items-center"><template v-for="(pcard,index) in selectCard">
+            <div class="cardList d-flex justify-content-center align-items-center flex-wrap"><template v-for="(pcard,index) in selectCard">
                 <div class="card seledCard p-0 col=auto animate__animated animate__slideInLeft"  :data-index=(index)>
                     <img style="width:100%" :src=pcard.pic alt="">
                 </div>
@@ -85,7 +87,7 @@
                 <!-- 選卡區 -->
                 <div class="cardList d-flex justify-content-center "><template v-for="(pcard,index) in gameCard">
                     <div class="card pileCard p-0 animate__animated animate__slideInLeft" :data-index=(index)>
-                        <img :src=pcard.pic alt="">
+                        <img style="width:100%" :src=pcard.pic alt="">
                     </div>
                 </template></div>
                 <button type="button" class="btn btn-outline-info border-2" @click="modeSet('look')">結束選取</button>

@@ -92,7 +92,8 @@ const App=Vue.createApp({
         mode:function chgMode(mode){
             if(mode=="look"){
                 let dSeled=document.querySelector('#selected');
-                dSeled.classList.replace('minh60','vh100')
+                dSeled.classList.replace('minh60','vh100');
+                dSeled.classList.add('bigcard')
             }
         },
     },
