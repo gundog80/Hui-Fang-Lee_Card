@@ -5,7 +5,8 @@ const App=Vue.createApp({
             card:[],
             gameCard:[],
             selectCard:[],
-
+            mode:"home",
+            modes:["home","lottery","select","look"]
 
         };
     },
@@ -36,8 +37,8 @@ const App=Vue.createApp({
             // console.log("newA=", newA)
         },
         listenCardArray(gameCard,selectCard){
-            var lotteryA = document.querySelector('#lotteryArea');
-            var selectA = document.querySelector('#selectArea');
+            var lotteryA = document.querySelector('#lotteryArea .cardList');
+            var selectA = document.querySelector('#selectArea .cardList');
             lotteryA.addEventListener('mouseup',selCard,false)
             selectA.addEventListener('mouseup',selCard,false)
             function selCard(e){
@@ -53,15 +54,76 @@ const App=Vue.createApp({
                 }
                 selectCard.push(gameCard[index]);
             }
+        },
+        modeSet(mName){
+            if(this.modes.indexOf(mName)!=-1){
+                this.mode=mName;
+                console.log(this.mode)
+            }
+        },
+        addClass(element, classToAdd){
+            let currentClassValue = element.className;
+            if (currentClassValue.indexOf(classToAdd) == -1){
+                if((currentClassValue == null) || (currentClassValue === "")){
+                    element.className = classToAdd;
+                } 
+                else 
+                {
+                    element.className += " " + classToAdd;
+        }}},
+        removeClass(element, classToRemove) {
+            let currentClassValue = element.className;
+            if(currentClassValue == classToRemove){
+                element.className = "";
+            return;}
+            let classValues = currentClassValue.split(" ");
+            let filteredList = [];
+            for (var i = 0 ; i < classValues.length ; i++){
+                if(classToRemove != classValues[i]){
+                    filteredList.push(classValues[i]);
+                }}
+            element.className = filteredList.join(" ");
+        },
+        try(){
+            console.log("try")
         }
-        
-  
     },
+    watch:{
+        mode:function chgMode(mode){
+            if(mode=="look"){
+                let dSeled=document.querySelector('#selected');
+                dSeled.classList.replace('minh60','vh100')
+            }
+        },
+    },
+    //     mode:function chgMode(mode){
+    //         let dHome=document.querySelector('#home');
+    //         let dLot=document.querySelector('#lotteryArea');
+    //         let dSel=document.querySelector('#selectArea');
+    //         let dSeled=document.querySelector('#selected');
+    //         switch(mode){
+    //             case "home" :
+    //               removeClass(dLot,"d-flex")
+    //               removeClass(dSel,"d-flex")
+    //               removeClass(dSeled,"d-flex")
+    //               removeClass(dSeled,"d-none")
+    //               addClass(dHome,"d-flex")
+    //               break;
+    //             case "lottery" :
+    //                 removeClass(Home,"d-flex")
+    //                 removeClass(dSel,"d-flex")
+    //                 addClass(dHome,"d-flex")
+                    
+    //               break;
+    //             default:
+                  
+    //               break;
+    //             }
+    //     }
+    // },
     beforeMount(){
         this.creat_card_array()
-        console.log(this.card)
         this.gameCard=this.creat_gameCard()
-        console.log(this.gameCard);
     },
     mounted(){
        this.listenCardArray(this.gameCard,this.selectCard)

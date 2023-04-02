@@ -22,21 +22,15 @@
         padding-right: 9%; !important
     }
     #selected .card{
-        width:13%;
+        width:12%;
+        margin:1em;
+        user-select:none;
+        border: 0;
     }
     .pileCard{
         max-width: 100px;
         margin:0;
         margin-right:-6%;
-        user-select:none;
-        /* max-width: 20%; */
-    }
-    .seledCard{
-        max-width: 100px;
-        /* max-width: 20%; */
-    }
-    .seledCard{
-        margin:3en;
         user-select:none;
         /* max-width: 20%; */
     }
@@ -46,37 +40,55 @@
     #selectArea .pileCard:hover{
         margin-right: 2em !important;
     }
+    .vh100{
+        height:100vh
+    }
+    .minh60{
+        min-height:60vh;
+    }
+
 
 </style>
 <body class="d-flex justify-content-center">
     <div id="App" class="container">
-        <div id="home" class=row></div>
-        <div id="selected" class="row d-flex bd-highlight justify-content-center">
+        <div id="home" class="row flex-column justify-content-evenly align-items-center vh100" v-show="mode=='home'">
+            <div class="h1 text-center">
+                請選擇使用模式
+                <!-- <button>選卡模式</button> -->
+            </div>
+            <button type="button" class="btn btn-lg btn-outline-info col-3 border-4" @click="modeSet('lottery')">抽卡模式</button>
+            <button type="button" class="btn btn-lg btn-outline-info col-3 border-4" @click="modeSet('select')">選卡模式</button>
+
+        </div>
+        <div id="selected" class="row minh60" v-show="mode!='home'">
             <!-- 已選取區 -->
-            <template v-for="(pcard,index) in selectCard">
+            <div class="cardList d-flex justify-content-center align-items-center"><template v-for="(pcard,index) in selectCard">
                 <div class="card seledCard p-0 col=auto animate__animated animate__slideInLeft"  :data-index=(index)>
                     <img style="width:100%" :src=pcard.pic alt="">
                 </div>
-            </template>
+            </template></div>
+            
         </div>
-        <div id="lotteryArea" class="row d-flex bd-highlight justify-content-center align-items-end" >
+        <div id="lotteryArea" class="row  justify-content-center align-items-end" v-show="mode=='lottery'" >
             <!-- <div id="cardArray" class=" d-flex p-2 bd-highlight justify-content-center align-items-end" style="padding-right:9% !important;height: 200px;">	 -->
-                <!-- 選卡區 -->
-                <template v-for="(pcard,index) in gameCard">
+                <!-- 抽卡區 -->
+                <div class="cardList d-flex justify-content-center "><template v-for="(pcard,index) in gameCard">
                     <div class="card pileCard p-0 animate__animated animate__slideInLeft" :data-index=(index)>
                         <img style="width:100%" :src=pcard.bak alt="">
                     </div>
-                </template>
+                </template></div>
+                <button type="button" class="btn btn-outline-info border-2" @click="modeSet('look')">結束抽卡</button>
             <!-- </div> -->
         </div>
-        <div id="selectArea" class="row d-flex bd-highlight justify-content-center align-items-end">
+        <div id="selectArea" class="row justify-content-center align-items-end" v-show="mode=='select'">
             <!-- <div id="cardArray" class=" d-flex p-2 bd-highlight justify-content-center align-items-end" style="padding-right:9% !important;height: 200px;">	 -->
                 <!-- 選卡區 -->
-                <template v-for="(pcard,index) in gameCard">
+                <div class="cardList d-flex justify-content-center "><template v-for="(pcard,index) in gameCard">
                     <div class="card pileCard p-0 animate__animated animate__slideInLeft" :data-index=(index)>
                         <img :src=pcard.pic alt="">
                     </div>
-                </template>
+                </template></div>
+                <button type="button" class="btn btn-outline-info border-2" @click="modeSet('look')">結束選取</button>
             <!-- </div> -->
         </div>
     </div>
