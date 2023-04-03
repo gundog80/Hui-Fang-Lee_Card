@@ -42,8 +42,10 @@ const App=Vue.createApp({
         listenCardArray(gameCard,selectCard,seledSet){
             let lotteryA = document.querySelector('#lotteryArea .cardList');
             let selectA = document.querySelector('#selectArea .cardList');
-            if(lotteryA){lotteryA.addEventListener('mouseup',selCard,false)};
-            if(selectA){selectA.addEventListener('mouseup',selCard,false)};
+            if(lotteryA){lotteryA.addEventListener('mouseup',selCard,false);
+                        lotteryA.addEventListener('touchmove',selCard,false)};
+            if(selectA){selectA.addEventListener('mouseup',selCard,false);
+                        selectA.addEventListener('touchmove',selCard,false)};
             function selCard(e){
                 let index;
                 if(e.target != lotteryA && e.target != selectA){
@@ -63,22 +65,22 @@ const App=Vue.createApp({
             console.log("onlistenRange")
             let index;
             let range = document.querySelector('#'+this.mode+'Range');
-            console.log("range is",range);
+            // console.log("range is",range);
             // let Ranged = document.querySelector('#lottery .range')
             // let Ranged2 = document.querySelector('#select .range')
             if(range){
-                console.log("before mouseup");
-                range.addEventListener('mouseup',RdCard,false);
+                // console.log("before mouseup");
+                range.addEventListener('touchend',RangedCard,false);
                 // Ranged.addEventListener('mouseup',selRCard,false);
                 // Ranged2.addEventListener('mouseup',selRCard,false);
-                function RdCard(e){
-                    console.log("on mouseup");
-                    console.log("selectCard[] is",sCard)
+                function RangedCard(e){
+                    // console.log("on mouseup");
+                    // console.log("selectCard[] is",sCard)
                     let target = document.querySelector('.ranged');
                     index=target.dataset.index;
-                    console.log("seledSet is",seledSet)
-                    console.log("gCard[index] is",gCard[index].name)
-                    console.log("selhas",seledSet.has(gCard[index].name))
+                    // console.log("seledSet is",seledSet)
+                    // console.log("gCard[index] is",gCard[index].name)
+                    // console.log("selhas",seledSet.has(gCard[index].name))
                     if(!seledSet.has(gCard[index].name)){
                         seledSet.add(gCard[index].name)
                         target.style.visibility = "hidden";
