@@ -42,10 +42,8 @@ const App=Vue.createApp({
         listenCardArray(gameCard,selectCard,seledSet){
             let lotteryA = document.querySelector('#lotteryArea .cardList');
             let selectA = document.querySelector('#selectArea .cardList');
-            if(lotteryA){lotteryA.addEventListener('mouseup',selCard,false);
-                        lotteryA.addEventListener('touchmove',selCard,false)};
-            if(selectA){selectA.addEventListener('mouseup',selCard,false);
-                        selectA.addEventListener('touchmove',selCard,false)};
+            if(lotteryA){lotteryA.addEventListener('mouseup',selCard,false)};
+            if(selectA){selectA.addEventListener('mouseup',selCard,false)};
             function selCard(e){
                 let index;
                 if(e.target != lotteryA && e.target != selectA){
