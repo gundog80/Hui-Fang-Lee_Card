@@ -14,31 +14,67 @@
     <title>心理卡</title>
 </head>
 <style>
-    .container{
-        width:1000px;
+    @media (min-width:992px){
+        .pileCard:hover{
+            align-items: flex-start !important;
+        }
+        #selectArea .pileCard:hover{
+            margin-right: .5rem !important;
+        }
+        .container{
+            width:1000px;
+        }
     }
+    @media (max-width:991px){
+        .container{
+            width:800px;
+
+        }
+    }
+    @media (max-width:575px){
+        .container{
+            width:450px;
+
+        }
+    }
+    @media (max-width:350px){
+        .container{
+            width:300px;
+
+        }
+    }
+
     .cardList{
-        height: 200px;
-        padding-right: 9% !important;
+        /* min-height: 9rem; */
+        line-height:10rem ;
+        padding-right: 4rem !important;
         align-items:flex-end;
+        flex-wrap:wrap;
     }
     #selected .card{
-        width:12%;
-        margin:1em;
+        
+        width:6rem;
+        margin:1rem;
+    }
+    .card{
+        border: 0 !important;
         user-select:none;
-        border: 0;
+        display:flex;
+        flex-direction: row;
+        align-items: end;
+        background-color: rgba(46, 46, 152,0);
     }
     .pileCard{
-        max-width: 10%;
+        width: 5rem;
+        height:10rem;
         margin:0;
-        margin-right:-6%;
-        user-select:none;
-        /* max-width: 20%; */
+        margin-right:-3.5rem;
+        margin-bottom: 1rem;
     }
-    .pileCard:hover , .ranged{
-        align-self: flex-start !important;
+    .ranged{
+        align-items :flex-start !important;
     }
-    #selectArea .pileCard:hover , #selectArea .ranged{
+    #selectArea .ranged{
         margin-right: .5em !important;
     }
     .vh100{
@@ -51,11 +87,12 @@
         width:15% !important;
     }
     .range{
-        margin-bottom: 1.5rem;
+        margin: 1.5rem;
+        margin-left:-10%
     }
 
 </style>
-<body class="d-flex justify-content-center">
+<body class="d-flex flex-column justify-content-around align-items-center">
     <div id="App" class="container">
         <div id="home" class="row flex-column justify-content-evenly align-items-center vh100" v-show="mode=='home'">
             <div class="h1 text-center">
@@ -75,7 +112,7 @@
             </template></div>
             <button v-if="mode=='look'" type="button" class="btn btn-outline-info border-2" style="height: 4rem;" @click="rePage">重新開始</button>
         </div>
-        <div id="lotteryArea" class="row  justify-content-center align-items-end" v-show="mode=='lottery'" >
+        <div id="lotteryArea" class="row  justify-content-center" v-show="mode=='lottery'" >
             <!-- <div id="cardArray" class=" d-flex p-2 bd-highlight justify-content-center align-items-end" style="padding-right:9% !important;height: 200px;">	 -->
                 <!-- 抽卡區 -->
                 <div class="cardList d-flex justify-content-center "><template v-for="(pcard,index) in gameCard">
@@ -83,7 +120,7 @@
                         <img style="width:100%" :src=pcard.bak alt="">
                     </div>
                 </template></div>
-                <input v-show="mode=='lottery'" id="lotteryRange" class="range d-xl-none" type="range" min="0" max="9" step="1" v-model="Range" style="width:36%;margin-left:-10%">
+                <input v-show="mode=='lottery'" id="lotteryRange" class="range d-xl-none" type="range" min="0" max="9" step="1" v-model="Range" style="width:60%;margin-left:-10%">
                 <button type="button" class="btn btn-outline-info border-2" @click="modeSet('look')">結束抽卡</button>
             <!-- </div> -->
         </div>
@@ -95,7 +132,7 @@
                         <img style="width:100%" :src=pcard.pic alt="">
                     </div>
                 </template></div>
-                <input v-show="mode=='select'" id="selectRange" class="range d-xl-none" type="range" min="0" max="9" step="1" v-model="Range" style="width:36%;margin-left:-10%">
+                <input v-show="mode=='select'" id="selectRange" class="range d-xl-none" type="range" min="0" max="9" step="1" v-model="Range" style="width:60%;margin-left:-10%">
                 <button type="button" class="btn btn-outline-info border-2" @click="modeSet('look')">結束選取</button>
             <!-- </div> -->
         </div>

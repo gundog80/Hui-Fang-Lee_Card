@@ -72,7 +72,7 @@ const App=Vue.createApp({
                 // Ranged.addEventListener('mouseup',selRCard,false);
                 // Ranged2.addEventListener('mouseup',selRCard,false);
                 function RangedCard(e){
-                    // console.log("on mouseup");
+                    // alert("on RangedCard");
                     // console.log("selectCard[] is",sCard)
                     let target = document.querySelector('.ranged');
                     index=target.dataset.index;
