@@ -39,6 +39,28 @@ const App=Vue.createApp({
             return newA;
             // console.log("newA=", newA)
         },
+        listenSelected(gameCard){
+        // listenSelected(gameCard,selectCard){
+            // let lotteryA = document.querySelector('#lotteryArea .cardList');
+            // console.log("gameCard is",this.gameCard);
+            let selectedA = document.querySelector('#selected .cardList');
+            // if(lotteryA){lotteryA.addEventListener('mouseup',selCard,false)};
+            if(selectedA){selected.addEventListener('click',canvasCard,false)};
+            console.log(selectedA)
+            function canvasCard(e){
+                let index;
+                console.log(e)
+                if(e.target != selectedA){
+                    if(e.target.tagName=="IMG"){
+                        index=e.target.parentElement.dataset.index;
+                    }else{
+                        index=e.target.dataset.index;
+                    }
+                }
+                // seledSet.add(gameCard[index].name);
+                window.open('./canvas.html?'+gameCard[index].name)
+            }
+        },
         listenCardArray(gameCard,selectCard,seledSet){
             let lotteryA = document.querySelector('#lotteryArea .cardList');
             let selectA = document.querySelector('#selectArea .cardList');
@@ -94,6 +116,9 @@ const App=Vue.createApp({
             if(this.modes.indexOf(mName)!=-1){
                 this.mode=mName;
                 console.log(this.mode)
+            }
+            if(mName=="look"){
+                this.listenSelected(this.gameCard);
             }
         },
         addClass(element, classToAdd){
