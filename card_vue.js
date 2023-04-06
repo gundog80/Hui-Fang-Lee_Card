@@ -57,8 +57,10 @@ const App=Vue.createApp({
                         index=e.target.dataset.index;
                     }
                 }
-                // seledSet.add(gameCard[index].name);
-                window.open('./canvas.html?'+gameCard[index].name)
+                console.log(index)
+                
+                // console.log(gameCard[index])
+                window.open('./canvas.html?'+index)
             }
         },
         listenCardArray(gameCard,selectCard,seledSet){

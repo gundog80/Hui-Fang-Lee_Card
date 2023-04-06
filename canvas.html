@@ -23,8 +23,8 @@
         }
         return 1;
     }
-    function runCanvas(){
-
+    // function runCanvas(){
+        let cardN=getCardN();
         const canvas = document.querySelector('#draw');
         const ctx = canvas.getContext('2d');  // 取得 Canvas 的渲染環境及其繪圖函數
         canvas.width = window.innerWidth;
@@ -80,15 +80,15 @@
         }
     
         var imgObject = new Image();
-        imgObject.src = "./img/card-"+cardN+"1.jpg";
+        imgObject.src = "./img/card-1.jpg";
                imgObject.addEventListener('load',function(){
         // ctx.drawImage(imgObject,window.innerWidth/4,0,window.innerWidth/2,window.innerHeight);
         ctx.drawImage(imgObject,window.innerWidth/4,0,window.innerWidth/2,window.innerWidth*0.9);
         })
-    }
-    let cardN=getCardN();
-    window.onload = function(cardN){
-	setTimeout(runCanvas,1000);//1000毫秒=1秒後執行fundotest方法版
-}
+    // }
+
+//     window.onload = function(){
+// 	setTimeout(runCanvas,1000);//1000毫秒=1秒後執行fundotest方法版
+// }
 </script>
 </html>
