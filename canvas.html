@@ -30,14 +30,14 @@
         ctx.strokeStyle = '#bada55';  // 筆觸顏色
         ctx.lineJoin = 'round';  // 兩條線交匯處產生 "圓形" 邊角
         ctx.lineCap = 'round';  // 筆觸預設為 "圓形"
-        // -----載入圖片
-        // let tempDom=document.querySelector('#getFont');
+        // -----設定筆觸大小為0.4rem
         let fontSize=window.getComputedStyle(document.documentElement)["fontSize"]
         console.log(fontSize);
-        ctx.lineWidth = parseInt(fontSize)*0.5;  // 筆頭寬度
+        ctx.lineWidth = parseInt(fontSize)*0.4;  // 筆頭寬度
         // -----載入圖片
+        let index=window.location.href.split("?")[1];
         let imgObject = new Image();
-        imgObject.src = "./img/card-1.jpg";
+        imgObject.src = "./img/card-"+index+".jpg";
         imgObject.addEventListener('load',function(){
             let dW=Math.min(window.innerWidth,window.innerHeight/1.6);
             let dH=Math.min(window.innerWidth*1.6,window.innerHeight)
@@ -52,11 +52,7 @@
         const ctx = canvas.getContext('2d');  // 取得 Canvas 的渲染環境及其繪圖函數
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight*0.9;
-        // Initialize
-        // ctx.strokeStyle = '#bada55';  // 筆觸顏色
-        // ctx.lineJoin = 'round';  // 兩條線交匯處產生 "圓形" 邊角
-        // ctx.lineCap = 'round';  // 筆觸預設為 "圓形"
-        // ctx.lineWidth = 5;  // 筆頭寬度
+
     
         let isDrawing = false;  // 是否允許繪製  (或說是否是 mousedown 下筆狀態)
     
@@ -71,14 +67,21 @@
         canvas.addEventListener('mousedown', (e) => {
             isDrawing = true; // 允許繪製
             [lastX, lastY] = [e.offsetX, e.offsetY]; // 設定起始點
+            console.log([lastX, lastY])
         });
         canvas.addEventListener('touchstart', (e) => {
-            isDrawing = true; // 允許繪製
-            [lastX, lastY] = [e.offsetX, e.offsetY]; // 設定起始點
+            e.preventDefault();
+            console.log(e)
+            console.log([lastX, lastY]) 
+            isDrawing= true; // 允許繪製
+            [lastX, lastY] = [e.touches[0].pageX - canvas.offsetLeft, e.touches[0].pageY - canvas.offsetTop]; // 設定起始點
+            console.log([lastX, lastY],isDrawing)
+            console.log([canvas.offsetLeft,canvas.offsetTop])
+            // (event.touches[0].pageX - canvas.offsetLeft, event.touches[0].pageY - canvas.offsetTop)
         });
         
         canvas.addEventListener('mousemove', draw);
-        canvas.addEventListener('touchmove', draw);
+        canvas.addEventListener('touchmove', touchDraw);
         
         /*========== 繪製函數；在 mousemove 的時候使用 ==========*/
         function draw(e) {
@@ -91,6 +94,20 @@
             ctx.stroke();  // 依照設定開始繪製
         
             [lastX, lastY] = [e.offsetX, e.offsetY];  // 位置更新
+            
+            // 自動變色功能
+            rainbow();
+        }
+        function touchDraw(e) {
+            if(!isDrawing) return;  // 沒有允許繪製即退出
+        
+            /* 繪製路線 Setting */
+            ctx.beginPath();  // 開始路徑 or Reset
+            ctx.moveTo(lastX, lastY);  // 設定起點
+            ctx.lineTo(e.touches[0].pageX - canvas.offsetLeft, e.touches[0].pageY - canvas.offsetTop);  // 設定終點
+            ctx.stroke();  // 依照設定開始繪製
+        
+            [lastX, lastY] = [e.touches[0].pageX - canvas.offsetLeft, e.touches[0].pageY - canvas.offsetTop];  // 位置更新
             
             // 自動變色功能
             rainbow();
