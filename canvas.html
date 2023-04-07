@@ -26,7 +26,7 @@
     }
     function setCanvas(){
         canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        canvas.height = window.innerHeight*0.9;
         ctx.strokeStyle = '#bada55';  // 筆觸顏色
         ctx.lineJoin = 'round';  // 兩條線交匯處產生 "圓形" 邊角
         ctx.lineCap = 'round';  // 筆觸預設為 "圓形"
@@ -51,7 +51,7 @@
         const canvas = document.querySelector('#draw');
         const ctx = canvas.getContext('2d');  // 取得 Canvas 的渲染環境及其繪圖函數
         canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        canvas.height = window.innerHeight*0.9;
         // Initialize
         // ctx.strokeStyle = '#bada55';  // 筆觸顏色
         // ctx.lineJoin = 'round';  // 兩條線交匯處產生 "圓形" 邊角
