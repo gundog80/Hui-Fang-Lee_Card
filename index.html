@@ -106,7 +106,7 @@
         <div id="selected" class="row minh60" v-if="mode!='home'">
             <!-- 已選取區 -->
             <div class="cardList d-flex justify-content-center align-items-center flex-wrap"><template v-for="(pcard,index) in selectCard">
-                <div class="card seledCard p-0 col=auto animate__animated animate__slideInLeft"  :data-index=(index)>
+                <div class="card seledCard p-0 col=auto animate__animated animate__slideInLeft"  :data-index=pcard.pic>
                     <img style="width:100%" :src=pcard.pic alt="">
                 </div>
             </template></div>
@@ -139,8 +139,4 @@
     </div>
 </body>
 </html>
-<script src="js/wow.min.js"></script>
-<script>
-new WOW().init();
-</script>
 <script src="./card_vue.js"></script>
