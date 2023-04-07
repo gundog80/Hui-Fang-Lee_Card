@@ -71,14 +71,21 @@
         canvas.addEventListener('mousedown', (e) => {
             isDrawing = true; // 允許繪製
             [lastX, lastY] = [e.offsetX, e.offsetY]; // 設定起始點
+            console.log([lastX, lastY])
         });
         canvas.addEventListener('touchstart', (e) => {
-            isDrawing = true; // 允許繪製
-            [lastX, lastY] = [e.offsetX, e.offsetY]; // 設定起始點
+            e.preventDefault();
+            console.log(e)
+            console.log([lastX, lastY]) 
+            isDrawing= true; // 允許繪製
+            [lastX, lastY] = [e.touches[0].pageX - canvas.offsetLeft, e.touches[0].pageY - canvas.offsetTop]; // 設定起始點
+            console.log([lastX, lastY],isDrawing)
+            console.log([canvas.offsetLeft,canvas.offsetTop])
+            // (event.touches[0].pageX - canvas.offsetLeft, event.touches[0].pageY - canvas.offsetTop)
         });
         
         canvas.addEventListener('mousemove', draw);
-        canvas.addEventListener('touchmove', draw);
+        canvas.addEventListener('touchmove', touchDraw);
         
         /*========== 繪製函數；在 mousemove 的時候使用 ==========*/
         function draw(e) {
@@ -91,6 +98,20 @@
             ctx.stroke();  // 依照設定開始繪製
         
             [lastX, lastY] = [e.offsetX, e.offsetY];  // 位置更新
+            
+            // 自動變色功能
+            rainbow();
+        }
+        function touchDraw(e) {
+            if(!isDrawing) return;  // 沒有允許繪製即退出
+        
+            /* 繪製路線 Setting */
+            ctx.beginPath();  // 開始路徑 or Reset
+            ctx.moveTo(lastX, lastY);  // 設定起點
+            ctx.lineTo(e.touches[0].pageX - canvas.offsetLeft, e.touches[0].pageY - canvas.offsetTop);  // 設定終點
+            ctx.stroke();  // 依照設定開始繪製
+        
+            [lastX, lastY] = [e.touches[0].pageX - canvas.offsetLeft, e.touches[0].pageY - canvas.offsetTop];  // 位置更新
             
             // 自動變色功能
             rainbow();
