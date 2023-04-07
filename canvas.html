@@ -30,14 +30,14 @@
         ctx.strokeStyle = '#bada55';  // 筆觸顏色
         ctx.lineJoin = 'round';  // 兩條線交匯處產生 "圓形" 邊角
         ctx.lineCap = 'round';  // 筆觸預設為 "圓形"
-        // -----載入圖片
-        // let tempDom=document.querySelector('#getFont');
+        // -----設定筆觸大小為0.4rem
         let fontSize=window.getComputedStyle(document.documentElement)["fontSize"]
         console.log(fontSize);
-        ctx.lineWidth = parseInt(fontSize)*0.5;  // 筆頭寬度
+        ctx.lineWidth = parseInt(fontSize)*0.4;  // 筆頭寬度
         // -----載入圖片
+        let index=window.location.href.split("?")[1];
         let imgObject = new Image();
-        imgObject.src = "./img/card-1.jpg";
+        imgObject.src = "./img/card-"+index+".jpg";
         imgObject.addEventListener('load',function(){
             let dW=Math.min(window.innerWidth,window.innerHeight/1.6);
             let dH=Math.min(window.innerWidth*1.6,window.innerHeight)
@@ -52,11 +52,7 @@
         const ctx = canvas.getContext('2d');  // 取得 Canvas 的渲染環境及其繪圖函數
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight*0.9;
-        // Initialize
-        // ctx.strokeStyle = '#bada55';  // 筆觸顏色
-        // ctx.lineJoin = 'round';  // 兩條線交匯處產生 "圓形" 邊角
-        // ctx.lineCap = 'round';  // 筆觸預設為 "圓形"
-        // ctx.lineWidth = 5;  // 筆頭寬度
+
     
         let isDrawing = false;  // 是否允許繪製  (或說是否是 mousedown 下筆狀態)
     
