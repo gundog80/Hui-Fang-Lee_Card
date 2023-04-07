@@ -12,6 +12,7 @@
 }
 </style>
 <body>
+    <div id="getFont" style="font-size:1rem">請任意塗鴉</div>
     <canvas id="draw"></canvas>
 </body>
 <script>
@@ -23,6 +24,28 @@
         }
         return 1;
     }
+    function setCanvas(){
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        ctx.strokeStyle = '#bada55';  // 筆觸顏色
+        ctx.lineJoin = 'round';  // 兩條線交匯處產生 "圓形" 邊角
+        ctx.lineCap = 'round';  // 筆觸預設為 "圓形"
+        // -----載入圖片
+        // let tempDom=document.querySelector('#getFont');
+        let fontSize=window.getComputedStyle(document.documentElement)["fontSize"]
+        console.log(fontSize);
+        ctx.lineWidth = parseInt(fontSize)*0.5;  // 筆頭寬度
+        // -----載入圖片
+        let imgObject = new Image();
+        imgObject.src = "./img/card-1.jpg";
+        imgObject.addEventListener('load',function(){
+            let dW=Math.min(window.innerWidth,window.innerHeight/1.6);
+            let dH=Math.min(window.innerWidth*1.6,window.innerHeight)
+        // ctx.drawImage(imgObject,window.innerWidth/4,0,window.innerWidth/2,window.innerHeight);
+            ctx.drawImage(imgObject,(window.innerWidth-dW)/2,(window.innerHeight-dH)/2,dW,dH);
+        })
+    }
+
     // function runCanvas(){
         let cardN=getCardN();
         const canvas = document.querySelector('#draw');
@@ -30,10 +53,10 @@
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         // Initialize
-        ctx.strokeStyle = '#bada55';  // 筆觸顏色
-        ctx.lineJoin = 'round';  // 兩條線交匯處產生 "圓形" 邊角
-        ctx.lineCap = 'round';  // 筆觸預設為 "圓形"
-        ctx.lineWidth = 5;  // 筆頭寬度
+        // ctx.strokeStyle = '#bada55';  // 筆觸顏色
+        // ctx.lineJoin = 'round';  // 兩條線交匯處產生 "圓形" 邊角
+        // ctx.lineCap = 'round';  // 筆觸預設為 "圓形"
+        // ctx.lineWidth = 5;  // 筆頭寬度
     
         let isDrawing = false;  // 是否允許繪製  (或說是否是 mousedown 下筆狀態)
     
@@ -43,13 +66,19 @@
         //-------------------------
         /*========== Events Binding ==========*/
         canvas.addEventListener('mouseup', () => isDrawing = false);
+        canvas.addEventListener('touchend', () => isDrawing = false);
         canvas.addEventListener('mouseout', () => isDrawing = false);
         canvas.addEventListener('mousedown', (e) => {
             isDrawing = true; // 允許繪製
             [lastX, lastY] = [e.offsetX, e.offsetY]; // 設定起始點
         });
+        canvas.addEventListener('touchstart', (e) => {
+            isDrawing = true; // 允許繪製
+            [lastX, lastY] = [e.offsetX, e.offsetY]; // 設定起始點
+        });
         
         canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('touchmove', draw);
         
         /*========== 繪製函數；在 mousemove 的時候使用 ==========*/
         function draw(e) {
@@ -79,16 +108,11 @@
             }
         }
     
-        var imgObject = new Image();
-        imgObject.src = "./img/card-1.jpg";
-               imgObject.addEventListener('load',function(){
-        // ctx.drawImage(imgObject,window.innerWidth/4,0,window.innerWidth/2,window.innerHeight);
-        ctx.drawImage(imgObject,window.innerWidth/4,0,window.innerWidth/2,window.innerWidth*0.9);
-        })
+
     // }
 
-//     window.onload = function(){
-// 	setTimeout(runCanvas,1000);//1000毫秒=1秒後執行fundotest方法版
-// }
+    window.onload = function(){
+	setTimeout(setCanvas,300);//1000毫秒=1秒後執行fundotest方法版
+}
 </script>
 </html>
