@@ -36,8 +36,10 @@
         ctx.lineWidth = parseInt(fontSize)*0.4;  // 筆頭寬度
         // -----載入圖片
         let index=window.location.href.split("?")[1];
+        // console.log("index=",index);
         let imgObject = new Image();
         imgObject.src = "./img/card-"+index+".jpg";
+        // imgObject.src = index;
         imgObject.addEventListener('load',function(){
             let dW=Math.min(window.innerWidth,window.innerHeight/1.6);
             let dH=Math.min(window.innerWidth*1.6,window.innerHeight)

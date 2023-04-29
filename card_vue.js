@@ -81,6 +81,7 @@ const App=Vue.createApp({
                 }
                 seledSet.add(gameCard[index].name);
                 selectCard.push(gameCard[index]);
+                console.log(gameCard[index])
             }
         },
         listenRange(gCard,sCard,seledSet){
