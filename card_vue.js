@@ -21,7 +21,7 @@ const App=Vue.createApp({
 
         //---------
         creat_card_array(){
-            for(n=1;n<10;n++){
+            for(n=1;n<=10;n++){
                 let temp={ name:n.toString() , pic:"./img/card-" + n.toString() + ".jpg" , bak:"./img/blue_back.jpg"}
                 this.card.push(temp)
                 
@@ -71,10 +71,15 @@ const App=Vue.createApp({
             function selCard(e){
                 let index;
                 if(e.target != lotteryA && e.target != selectA){
-                    if(e.target.tagName=="IMG"){
+                    if(e.target.tagName=="IMG" && e.target.parentElement.parentElement == lotteryA){
                         e.target.parentElement.style.visibility = "hidden";
                         index=e.target.parentElement.dataset.index;
-                    }else{
+                    }
+                    else if(e.target.tagName=="IMG" && e.target.parentElement.parentElement.parentElement == selectA){
+                        e.target.parentElement.parentElement.style.visibility = "hidden";
+                        index=e.target.parentElement.dataset.index;
+                    }
+                    else{
                         index=e.target.dataset.index;
                         e.target.style.visibility = "hidden";
                     }

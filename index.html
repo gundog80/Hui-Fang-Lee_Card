@@ -14,6 +14,8 @@
     <title>心理卡</title>
 </head>
 <style>
+
+
     @media (min-width:992px){
         .pileCard:hover{
             align-items: flex-start !important;
@@ -43,7 +45,15 @@
 
         }
     }
-
+    .imgBox{
+        display: flex;
+        align-items: center;
+        width:100%;
+        height:0;
+        overflow:hidden;
+        padding-top: 68%;
+        padding-bottom: 68%;
+    }
     .cardList{
         /* min-height: 9rem; */
         line-height:10rem ;
@@ -107,7 +117,9 @@
             <!-- 已選取區 -->
             <div class="cardList d-flex justify-content-center align-items-center flex-wrap"><template v-for="(pcard,index) in selectCard">
                 <div class="card seledCard p-0 col=auto animate__animated animate__slideInLeft"  :data-index="pcard.pic.split('-')[1].split('.')[0]">
-                    <img style="width:100%" :src=pcard.pic alt="">
+                    <div class="imgBox" :data-index="pcard.pic.split('-')[1].split('.')[0]">
+                        <img style="width:100%" :src=pcard.pic alt="">
+                    </div>
                 </div>
             </template></div>
             <button v-if="mode=='look'" type="button" class="btn btn-outline-info border-2" style="height: 4rem;" @click="rePage">重新開始</button>
@@ -116,8 +128,9 @@
             <!-- <div id="cardArray" class=" d-flex p-2 bd-highlight justify-content-center align-items-end" style="padding-right:9% !important;height: 200px;">	 -->
                 <!-- 抽卡區 -->
                 <div class="cardList d-flex justify-content-center "><template v-for="(pcard,index) in gameCard">
-                    <div :id="'lotteryCard-'+(index+1)" class="card pileCard p-0 animate__animated animate__slideInLeft" :data-index=(index)>
-                        <img style="width:100%" :src=pcard.bak alt="">
+                    <div :id="'lotteryCard-'+(index+1)" class="card pileCard p-0 animate__animated animate__slideInLeft" 
+                    :data-index=(index)>
+                            <img style="width:100%" :src=pcard.bak alt="">
                     </div>
                 </template></div>
                 <input v-show="mode=='lottery'" id="lotteryRange" class="range d-xl-none" type="range" min="0" max="9" step="1" v-model="Range" style="width:60%;margin-left:-10%">
@@ -129,7 +142,9 @@
                 <!-- 選卡區 -->
                 <div class="cardList d-flex justify-content-center "><template v-for="(pcard,index) in gameCard">
                     <div :id="'selectCard-'+(index+1)" class="card pileCard p-0 animate__animated animate__slideInLeft" :data-index=(index)>
-                        <img style="width:100%" :src=pcard.pic alt="">
+                        <div class="imgBox" :data-index=(index)>
+                            <img style="width:100%" :src=pcard.pic alt="">
+                        </div>
                     </div>
                 </template></div>
                 <input v-show="mode=='select'" id="selectRange" class="range d-xl-none" type="range" min="0" max="9" step="1" v-model="Range" style="width:60%;margin-left:-10%">
