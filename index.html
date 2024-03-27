@@ -57,14 +57,18 @@
     .cardList{
         /* min-height: 9rem; */
         line-height:10rem ;
-        padding-right: 4rem !important;
+        padding-right: 4rem ;
         align-items:flex-end;
         flex-wrap:wrap;
+    }
+
+    #selected .cardList{
+        padding-right:0;
     }
     #selected .card{
         
         width:6rem;
-        margin:1rem;
+        margin: 0.5rem;
     }
     .card{
         border: 0 !important;
@@ -94,7 +98,11 @@
         min-height:60vh;
     }
     .bigcard>.cardList>.card{
-        width:15% !important;
+        width:50% !important;
+    }
+    @media only screen and (max-width:575px) {
+        .bigcard>.cardList>.card{
+        width:90% !important;}
     }
     .range{
         margin: 1.5rem;
@@ -115,7 +123,7 @@
         </div>
         <div id="selected" class="row minh60" v-if="mode!='home'">
             <!-- 已選取區 -->
-            <div class="cardList d-flex justify-content-center align-items-center flex-wrap"><template v-for="(pcard,index) in selectCard">
+            <div class="cardList d-flex justify-content-center align-items-center flex-wrap mb-4"><template v-for="(pcard,index) in selectCard">
                 <div class="card seledCard p-0 col=auto animate__animated animate__slideInLeft"  :data-index="pcard.pic.split('-')[1].split('.')[0]">
                     <div class="imgBox" :data-index="pcard.pic.split('-')[1].split('.')[0]">
                         <img style="width:100%" :src=pcard.pic alt="">
@@ -133,7 +141,7 @@
                             <img style="width:100%" :src=pcard.bak alt="">
                     </div>
                 </template></div>
-                <input v-show="mode=='lottery'" id="lotteryRange" class="range d-xl-none" type="range" min="0" max="9" step="1" v-model="Range" style="width:60%;margin-left:-10%">
+                <input v-show="mode=='lottery'" id="lotteryRange" class="range d-xl-none" type="range" min="0" :max="totalCard" step="1" v-model="Range" style="width:60%;margin-left:5%">
                 <button type="button" class="btn btn-outline-info border-2" @click="modeSet('look')">結束抽卡</button>
             <!-- </div> -->
         </div>

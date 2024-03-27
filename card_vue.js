@@ -9,6 +9,7 @@ const App=Vue.createApp({
             mode:"home",
             modes:["home","lottery","select","look"],
             Range:3,
+            totalCard:10,
 
 
         };
@@ -21,7 +22,7 @@ const App=Vue.createApp({
 
         //---------
         creat_card_array(){
-            for(n=1;n<=10;n++){
+            for(n=1;n<=this.totalCard;n++){
                 let temp={ name:n.toString() , pic:"./img/card-" + n.toString() + ".jpg" , bak:"./img/blue_back.jpg"}
                 this.card.push(temp)
                 
