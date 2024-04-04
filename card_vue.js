@@ -9,7 +9,7 @@ const App=Vue.createApp({
             mode:"home",
             modes:["home","lottery","select","look"],
             Range:3,
-            totalCard:20,
+            totalCard:36,
 
 
         };

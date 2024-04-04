@@ -10,9 +10,54 @@
     html, body {
     margin:0;
 }
+#penSelector>li{
+    width: 1em;
+    height:1em;
+    line-height: 1em;
+    border-radius: 0.5em;
+    border-style:solid;
+    border-width: 1px;
+    background-color: aqua;
+    margin: 0.3rem;
+    border-color:rgb(41, 41, 41);
+}
+.inLineList{
+    list-style-type: none;
+    justify-items: end;
+    display: flex;
+}
+.right-dp{
+    justify-content:end;
+}
+/* .action::after{
+    content:"";
+    display:block;
+background-color: blue;
+width:2em;
+height: 2em;
+position: relative;
+left:-0.5em;
+top:-1.5em;
+z-index: -5
+;
+} */
+.action{
+    box-shadow:inset 0 0 0.5rem rgba(28, 204, 5, 0.6);
+    box-shadow:0 0 10px rgba(28, 204, 5, 0.87);
+}
+.row{
+    background:conic-gradient(#f00, #f50, #ff0, #0c0, #09d, #03a, #909, #f00);
+}
 </style>
-<body>
-    <div id="getFont" style="font-size:1rem">請任意塗鴉</div>
+<body class="d-flex">
+    <div id="getFont" style="font-size:2.5rem">請任意塗鴉</div>
+    <ul id="penSelector" class="penSelector inLineList right-dp" style="">
+        <li id="rowPen" data-color="row" class="action row" ></li>
+        <li id="redPen" data-color="red" class=""></li>
+        <li id="yellowPen" data-color="yellow" class=""></li>
+        <li id="bluePen" data-color="blue" class=""></li>
+        <li id="greenPen" data-color="green" class="" ></li>
+    </ul>
     <canvas id="draw"></canvas>
 </body>
 <script>
@@ -24,6 +69,36 @@
         }
         return 1;
     }
+    //-------------------
+    function setPenSelector(){
+        const penSelector = document.querySelector('#penSelector');
+        let nowPen="row";
+        console.log(penSelector);
+        let penItems=penSelector.querySelectorAll("li");
+        console.log(penItems);
+        penItems.forEach(pen => {
+            let penColor=pen.getAttribute('data-color');
+            if(penColor!="row"){
+                pen.setAttribute("style","background-color:"+penColor);
+            }
+        });
+        penSelector.addEventListener('touchend',(e)=>{
+            removeClass(document.querySelector("#penSelector").querySelector(".action"),"action");
+            changePen(e.srcElement);
+        }
+        )
+    };
+    var color='row';
+    function changePen(e){
+        addClass(e,"action");
+        color=e.getAttribute('data-color');
+        if(color!="row"){
+            ctx.strokeStyle = color;
+            console.log(ctx.strokeStyle);
+        }
+    }
+    
+    
     function setCanvas(){
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight*0.9;
@@ -47,9 +122,36 @@
             ctx.drawImage(imgObject,(window.innerWidth-dW)/2,(window.innerHeight-dH)/2,dW,dH);
         })
     }
+    function addClass(element, classToAdd){
+            let currentClassValue = element.className;
+            // console.log("aa");
+            if (currentClassValue.indexOf(classToAdd) == -1){
+                if((currentClassValue == null) || (currentClassValue === "")){
+                    element.className = classToAdd;
+                } 
+                else 
+                {
+                    element.className += " " + classToAdd;
+        }}}
+    function removeClass(element, classToRemove) {
+        let currentClassValue = element.className;
+        if(currentClassValue == classToRemove){
+            element.className = "";
+        return;}
+        let classValues = currentClassValue.split(" ");
+        let filteredList = [];
+        for (var i = 0 ; i < classValues.length ; i++){
+            if(classToRemove != classValues[i]){
+                filteredList.push(classValues[i]);
+            }}
+        element.className = filteredList.join(" ");
+    }
 
     // function runCanvas(){
         let cardN=getCardN();
+
+
+
         const canvas = document.querySelector('#draw');
         const ctx = canvas.getContext('2d');  // 取得 Canvas 的渲染環境及其繪圖函數
         canvas.width = window.innerWidth;
@@ -88,6 +190,7 @@
         /*========== 繪製函數；在 mousemove 的時候使用 ==========*/
         function draw(e) {
             if(!isDrawing) return;  // 沒有允許繪製即退出
+            rainbow();            // 自動變色功能
         
             /* 繪製路線 Setting */
             ctx.beginPath();  // 開始路徑 or Reset
@@ -97,11 +200,10 @@
         
             [lastX, lastY] = [e.offsetX, e.offsetY];  // 位置更新
             
-            // 自動變色功能
-            rainbow();
         }
         function touchDraw(e) {
             if(!isDrawing) return;  // 沒有允許繪製即退出
+            rainbow();            // 自動變色功能
         
             /* 繪製路線 Setting */
             ctx.beginPath();  // 開始路徑 or Reset
@@ -111,19 +213,19 @@
         
             [lastX, lastY] = [e.touches[0].pageX - canvas.offsetLeft, e.touches[0].pageY - canvas.offsetTop];  // 位置更新
             
-            // 自動變色功能
-            rainbow();
         }
         /*---------- Rainbow 功能 ----------*/
         let hue = 0; // 色相環度數從 0 開始 (的異世界!? XD)
     
         function rainbow(){
-            // 透過 context 的 strokeStyle 設定筆畫顏色
-            ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
-    
-            hue++; // 色相環 度數更新
-            if (hue >= 360) {
-                hue = 0;
+            if(color=="row"){
+                // 透過 context 的 strokeStyle 設定筆畫顏色
+                ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+        
+                hue++; // 色相環 度數更新
+                if (hue >= 360) {
+                    hue = 0;
+                }
             }
         }
     
@@ -132,6 +234,7 @@
 
     window.onload = function(){
 	setTimeout(setCanvas,300);//1000毫秒=1秒後執行fundotest方法版
+    setPenSelector();
 }
 </script>
 </html>
