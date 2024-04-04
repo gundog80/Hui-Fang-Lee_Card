@@ -83,8 +83,13 @@ z-index: -5
             }
         });
         penSelector.addEventListener('touchend',(e)=>{
-            removeClass(document.querySelector("#penSelector").querySelector(".action"),"action");
-            changePen(e.srcElement);
+            // console.log(e.srcElement.nodeName);
+            let AAA=e.srcElement.nodeName;
+            // console.log(AAA);
+            if(AAA=="LI"){
+                removeClass(document.querySelector("#penSelector").querySelector(".action"),"action");
+                changePen(e.srcElement);
+            }
         }
         )
     };
